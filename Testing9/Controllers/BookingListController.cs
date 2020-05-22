@@ -14,15 +14,14 @@ namespace Testing9.Controllers
     {
        
         [HttpGet]
-        public HttpResponseMessage Get()
+        public IHttpActionResult Get()
         {
             List<Booking> bookingList = new List<Booking>();
             using (EZbookContext db = new EZbookContext())
             {
                 bookingList = db.Booking.OrderBy(a => a.BookingId).ToList();
-                HttpResponseMessage response;
-                response = Request.CreateResponse(HttpStatusCode.OK, bookingList);
-                return response;
+                
+                return Ok(bookingList);
             }
         }
     }
