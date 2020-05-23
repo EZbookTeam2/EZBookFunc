@@ -36,7 +36,7 @@ namespace Testing9.Controllers
                 {
                     dbContext.Add(user);
                     dbContext.SaveChanges();
-                    string message = "Registered";
+                    string message = "Registered liao";
                     return Ok(message);
                  }
                 catch (Exception ex)
