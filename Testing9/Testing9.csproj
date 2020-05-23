@@ -179,6 +179,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BookingListController.cs" />
+    <Compile Include="Controllers\CancellationListController.cs" />
     <Compile Include="Controllers\Test9Controller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
