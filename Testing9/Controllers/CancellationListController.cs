@@ -19,6 +19,7 @@ namespace Testing9.Controllers
         public string Time { get; set; }
         public string Username { get; set; }
         public string Status { get; set; }
+        public string Reason { get; set; }
         public List<string> CancellationList { get; set; }
     }
     [RoutePrefix("api/CancellationList")]
@@ -40,6 +41,8 @@ namespace Testing9.Controllers
                                                      BookingId = d.BookingId,
                                                      RoomName = d.Name,
                                                      Title = d.Title,
+                                                     Status = c.Status,
+                                                     Reason = c.Reason,
                                                      Location = d.Location,
                                                      Time = d.Time,
                                                      Date = d.Date,
