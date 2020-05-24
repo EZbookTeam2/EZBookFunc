@@ -28,26 +28,27 @@ namespace Testing9.Controllers
         [HttpGet]
         public IHttpActionResult Get()
         {
-            
-            using (EZbookContext db = new EZbookContext())
+
+            using (ezbookdatabaseContext db = new ezbookdatabaseContext())
             {
                 List<Data> CancellationList = (from c in db.Cancellation
-                                                 join d in db.Booking
-                                                 on c.BookingId equals d.BookingId
-                                                 join e in db.Users on d.UsersId equals e.UsersId
-                                                 select new Data
-                                                 {   Username = e.Names,
-                                                     CancelId = c.CancellationId,
-                                                     BookingId = d.BookingId,
-                                                     RoomName = d.Name,
-                                                     Title = d.Title,
-                                                     Status = c.Status,
-                                                     Reason = c.Reason,
-                                                     Location = d.Location,
-                                                     Time = d.Time,
-                                                     Date = d.Date,
-                                                 }).ToList();
-                
+                                               join d in db.Booking
+                                               on c.BookingId equals d.BookingId
+                                               join e in db.Users on d.UsersId equals e.UsersId
+                                               select new Data
+                                               {
+                                                   Username = e.Names,
+                                                   CancelId = c.CancellationId,
+                                                   BookingId = d.BookingId,
+                                                   RoomName = d.Name,
+                                                   Title = d.Title,
+                                                   Status = c.Status,
+                                                   Reason = c.Reason,
+                                                   Location = d.Location,
+                                                   Time = d.Time,
+                                                   Date = d.Date,
+                                               }).ToList();
+
 
 
                 return Ok(CancellationList);

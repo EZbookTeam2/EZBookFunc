@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Testing9.Models
 {
-    public partial class EZbookContext : DbContext
+    public partial class ezbookdatabaseContext : DbContext
     {
-        public EZbookContext()
+        public ezbookdatabaseContext()
         {
         }
 
-        public EZbookContext(DbContextOptions<EZbookContext> options)
+        public ezbookdatabaseContext(DbContextOptions<ezbookdatabaseContext> options)
             : base(options)
         {
         }
@@ -27,7 +27,7 @@ namespace Testing9.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=tcp:ezbook.database.windows.net,1433;Initial Catalog=EZbook;Persist Security Info=False;User ID=kelvin;Password=Abc123456;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                optionsBuilder.UseSqlServer("Server=tcp:ezbookagtiv.database.windows.net,1433;Initial Catalog=ezbookdatabase;Persist Security Info=False;User ID=kelvin;Password=Abc123456;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
 
@@ -83,12 +83,12 @@ namespace Testing9.Models
                 entity.HasOne(d => d.Room)
                     .WithMany(p => p.Booking)
                     .HasForeignKey(d => d.RoomId)
-                    .HasConstraintName("FK__Booking__room_id__571DF1D5");
+                    .HasConstraintName("FK__Booking__room_id__5441852A");
 
                 entity.HasOne(d => d.Users)
                     .WithMany(p => p.Booking)
                     .HasForeignKey(d => d.UsersId)
-                    .HasConstraintName("FK__Booking__users_i__5629CD9C");
+                    .HasConstraintName("FK__Booking__users_i__534D60F1");
             });
 
             modelBuilder.Entity<Cancellation>(entity =>
@@ -102,6 +102,10 @@ namespace Testing9.Models
                     .HasColumnName("booking_id")
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Reason)
+                    .HasColumnName("reason")
+                    .HasMaxLength(4000);
 
                 entity.Property(e => e.Status)
                     .HasColumnName("status")
@@ -166,13 +170,13 @@ namespace Testing9.Models
                 entity.HasOne(d => d.Room)
                     .WithMany(p => p.Slot)
                     .HasForeignKey(d => d.RoomId)
-                    .HasConstraintName("FK__Slot__room_id__5165187F");
+                    .HasConstraintName("FK__Slot__room_id__5535A963");
             });
 
             modelBuilder.Entity<Testing>(entity =>
             {
                 entity.HasKey(e => e.Username)
-                    .HasName("PK__Testing__536C85E51AFE9FE4");
+                    .HasName("PK__Testing__536C85E577232364");
 
                 entity.Property(e => e.Username).HasMaxLength(255);
 

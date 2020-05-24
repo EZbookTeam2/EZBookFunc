@@ -13,7 +13,7 @@ namespace Testing9.Controllers
     [RoutePrefix("api/test9")]
     public class Test9Controller : ApiController
     {
-        EZbookContext dbContext = new EZbookContext();
+        ezbookdatabaseContext dbContext = new ezbookdatabaseContext();
 
         [HttpGet]
         public IHttpActionResult Get()
@@ -38,7 +38,7 @@ namespace Testing9.Controllers
                     dbContext.SaveChanges();
                     string message = "Registered";
                     return Ok(message);
-                 }
+                }
                 catch (Exception ex)
                 {
                     string message = "Register failed " + ex.Message;
@@ -51,7 +51,7 @@ namespace Testing9.Controllers
                 string message = "Username has been used";
                 return Ok(message);
             }
-            
+
         }
     }
 }

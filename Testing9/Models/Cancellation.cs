@@ -8,7 +8,6 @@ namespace Testing9.Models
         public string CancellationId { get; set; }
         public string BookingId { get; set; }
         public string Status { get; set; }
-
         public string Reason { get; set; }
     }
 }

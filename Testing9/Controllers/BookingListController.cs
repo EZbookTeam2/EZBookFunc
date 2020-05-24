@@ -17,7 +17,7 @@ namespace Testing9.Controllers
         public IHttpActionResult Get()
         {
             List<Booking> bookingList = new List<Booking>();
-            using (EZbookContext db = new EZbookContext())
+            using (ezbookdatabaseContext db = new ezbookdatabaseContext())
             {
                 bookingList = db.Booking.OrderBy(a => a.BookingId).ToList();
                 
