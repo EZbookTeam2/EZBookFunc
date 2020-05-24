@@ -186,7 +186,7 @@
     </Compile>
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\Cancellation.cs" />
-    <Compile Include="Models\EZbookContext.cs" />
+    <Compile Include="Models\ezbookdatabaseContext.cs" />
     <Compile Include="Models\Room.cs" />
     <Compile Include="Models\Slot.cs" />
     <Compile Include="Models\Testing.cs" />
@@ -221,7 +221,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51069</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://127.0.0.1:44382/</IISUrl>
+          <IISUrl>http://127.0.0.1:51069/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
