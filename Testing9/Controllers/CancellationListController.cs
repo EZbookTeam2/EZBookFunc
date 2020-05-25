@@ -35,6 +35,7 @@ namespace Testing9.Controllers
                                                join d in db.Booking
                                                on c.BookingId equals d.BookingId
                                                join e in db.Users on d.UsersId equals e.UsersId
+                                               where(c.Status == "New")
                                                select new Data
                                                {
                                                    Username = e.Names,
