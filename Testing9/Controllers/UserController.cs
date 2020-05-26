@@ -19,7 +19,7 @@ namespace Testing9.Controllers
         public string Nationality { get; set; }
         public string Position { get; set; }
         public string Code { get; set; }
-        public string Profilepic { get; set; }
+        public byte[] Profilepic { get; set; }
     }
 
     [RoutePrefix("api/User")]
