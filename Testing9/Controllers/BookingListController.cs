@@ -13,13 +13,13 @@ namespace Testing9.Controllers
     public class BookingListController : ApiController
     {
        
-        [HttpPost]
-        public IHttpActionResult Post(Booking value)
+        [HttpGet]
+        public IHttpActionResult Get()
         {
             List<Booking> bookingList = new List<Booking>();
             using (ezbookdatabaseContext db = new ezbookdatabaseContext())
             {
-                bookingList = db.Booking.Where(a => a.UsersId == value.UsersId && a.Status == "Approved").OrderBy(a => a.BookingId).ToList();
+                bookingList = db.Booking.Where(a => a.Status == "Approved").OrderBy(a => a.BookingId).ToList();
                 
                 return Ok(bookingList);
             }
