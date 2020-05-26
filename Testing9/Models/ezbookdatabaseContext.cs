@@ -231,8 +231,7 @@ namespace Testing9.Models
 
                 entity.Property(e => e.Profilepic)
                     .HasColumnName("profilepic")
-                    .HasMaxLength(999)
-                    .IsUnicode(false);
+                    .HasColumnType("image");
 
                 entity.Property(e => e.StartDate)
                     .HasColumnName("startDate")
