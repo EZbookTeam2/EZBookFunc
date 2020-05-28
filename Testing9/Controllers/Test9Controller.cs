@@ -18,7 +18,7 @@ namespace Testing9.Controllers
         [HttpGet]
         public IHttpActionResult Get()
         {
-            return Ok("connected liao");
+            return Ok("connected liao mou");
         }
 
         [HttpPost]
