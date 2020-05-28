@@ -178,6 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BookingApplicationController.cs" />
     <Compile Include="Controllers\BookingListAdminController.cs" />
     <Compile Include="Controllers\BookingListController.cs" />
     <Compile Include="Controllers\CancellationListController.cs" />
