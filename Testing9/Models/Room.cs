@@ -14,7 +14,7 @@ namespace Testing9.Models
         public string RoomId { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
 
         public virtual ICollection<Booking> Booking { get; set; }
         public virtual ICollection<Slot> Slot { get; set; }

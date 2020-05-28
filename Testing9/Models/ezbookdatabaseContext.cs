@@ -122,7 +122,7 @@ namespace Testing9.Models
 
                 entity.Property(e => e.Image)
                     .HasColumnName("image")
-                    .HasColumnType("image");
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Location)
                     .HasColumnName("location")
