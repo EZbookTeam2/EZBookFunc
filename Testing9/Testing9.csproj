@@ -182,7 +182,9 @@
     <Compile Include="Controllers\BookingApplicationController.cs" />
     <Compile Include="Controllers\BookingListAdminController.cs" />
     <Compile Include="Controllers\BookingListController.cs" />
+    <Compile Include="Controllers\cancelcheckController.cs" />
     <Compile Include="Controllers\CancellationListController.cs" />
+    <Compile Include="Controllers\CancellationsubmitController.cs" />
     <Compile Include="Controllers\Test9Controller.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
