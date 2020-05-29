@@ -15,7 +15,7 @@ namespace Testing9.Controllers
     {
         public string Message { get; set; }
     }
-        public class CancellationsubmitController : ApiController
+    public class CancellationsubmitController : ApiController
     {
         ezbookdatabaseContext dbContext = new ezbookdatabaseContext();
 
@@ -23,8 +23,8 @@ namespace Testing9.Controllers
         public IHttpActionResult Post(Cancellation value)
         {
 
-            var Id = int.Parse(dbContext.Cancellation.Max(z => z.CancellationId))+1;
-            
+            var Id = int.Parse(dbContext.Cancellation.Max(z => z.CancellationId)) + 1;
+
             if (!dbContext.Cancellation.Any(cancel => cancel.BookingId.Equals(value.BookingId)))
             {
                 Cancellation cancellation = new Cancellation();
@@ -45,7 +45,7 @@ namespace Testing9.Controllers
                     string message = "Submit Failed" + ex.Message;
                     var example = new messageclass { Message = message };
                     return Ok(example);
-                
+
 
                 }
             }
@@ -54,7 +54,7 @@ namespace Testing9.Controllers
                 string message = "You have made a cancellation for this Booking already, please wait for the approval";
                 var example = new messageclass { Message = message };
                 return Ok(example);
-                
+
             }
 
         }
