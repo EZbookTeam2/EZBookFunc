@@ -45,6 +45,11 @@ namespace Testing9.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
+                entity.Property(e => e.EndTime)
+                    .HasColumnName("endTime")
+                    .HasMaxLength(1)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Location)
                     .HasColumnName("location")
                     .HasMaxLength(255)
@@ -58,6 +63,11 @@ namespace Testing9.Models
                 entity.Property(e => e.RoomId)
                     .HasColumnName("room_id")
                     .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.StartTime)
+                    .HasColumnName("startTime")
+                    .HasMaxLength(1)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Status)

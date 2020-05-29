@@ -14,6 +14,8 @@ namespace Testing9.Models
         public string Date { get; set; }
         public string Time { get; set; }
         public string Status { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
 
         public virtual Room Room { get; set; }
         public virtual Users Users { get; set; }
