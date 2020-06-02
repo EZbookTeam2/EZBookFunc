@@ -25,6 +25,7 @@ namespace Testing9.Controllers
     [RoutePrefix("api/User")]
     public class UserController : ApiController
     {
+        [HttpGet]
         public IHttpActionResult Get()
         {
             using (ezbookdatabaseContext db = new ezbookdatabaseContext())
@@ -46,6 +47,35 @@ namespace Testing9.Controllers
                 return Ok(User);
             }
         }
-        
+
+        [HttpPut]
+        public IHttpActionResult Put(Users value)
+        {
+            using (ezbookdatabaseContext db = new ezbookdatabaseContext())
+            {
+                var entity = db.Users.FirstOrDefault(e => e.UsersId == value.UsersId);
+
+                entity.Names = value.Names;
+                entity.Passwords = value.Passwords;
+                entity.Email = value.Email;
+                entity.Department = value.Department;
+                entity.Nationality = value.Nationality;
+
+                db.SaveChanges();
+            }
+            try
+            {
+                string message = "Added";
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                string message = "Add Fail" + ex.Message;
+                return Ok(message);
+            }
+           
     }
+
+}
+ 
 }
