@@ -21,7 +21,7 @@ namespace Testing9.Controllers
             List<Booking> bookingList = new List<Booking>();
             using (ezbookdatabaseContext db = new ezbookdatabaseContext())
             {
-                bookingList = db.Booking.Where(a => a.Status == "Approved").OrderBy(a => a.BookingId).ToList();
+                bookingList = db.Booking.Where(a => a.Status == "Approve").OrderBy(a => a.BookingId).ToList();
                 
                 return Ok(bookingList);
             }
