@@ -190,6 +190,7 @@
     <Compile Include="Controllers\CancellationListController.cs" />
     <Compile Include="Controllers\CancellationsubmitController.cs" />
     <Compile Include="Controllers\CreateRoomController.cs" />
+    <Compile Include="Controllers\RegisterUserController.cs" />
     <Compile Include="Controllers\Test9Controller.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
