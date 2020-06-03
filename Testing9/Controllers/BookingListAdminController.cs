@@ -39,7 +39,7 @@ namespace Testing9.Controllers
                 List<cancelbooking> BookingList = (from b in db.Users
                                                    join c in db.Booking
                                                    on b.UsersId equals c.UsersId
-                                                   where (c.Status == "Approved")
+                                                   where (c.Status == "Approve")
                                                    orderby (c.BookingId) descending
                                                    select new cancelbooking
                                                    {
