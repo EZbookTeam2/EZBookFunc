@@ -185,6 +185,7 @@
     <Compile Include="Controllers\BookingIDController.cs" />
     <Compile Include="Controllers\BookingListAdminController.cs" />
     <Compile Include="Controllers\BookingListController.cs" />
+    <Compile Include="Controllers\CancelBookingController.cs" />
     <Compile Include="Controllers\cancelcheckController.cs" />
     <Compile Include="Controllers\CancellationListController.cs" />
     <Compile Include="Controllers\CancellationsubmitController.cs" />
