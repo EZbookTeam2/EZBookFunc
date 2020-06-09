@@ -60,6 +60,8 @@ namespace Testing9.Controllers
                 entity.Email = value.Email;
                 entity.Department = value.Department;
                 entity.Nationality = value.Nationality;
+                entity.Profilepic = value.Profilepic;
+                entity.Code = value.Code;
 
                 db.SaveChanges();
             }
