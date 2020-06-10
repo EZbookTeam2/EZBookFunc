@@ -20,6 +20,7 @@ namespace Testing9.Controllers
         public string Time { get; set; }
         public string Username { get; set; }
         public string Status { get; set; }
+        public string UserId { get; set; }
         public List<string> BookingApplication { get; set; }
     }
     [RoutePrefix("api/BookingApplication")]
@@ -37,6 +38,7 @@ namespace Testing9.Controllers
                                                {
                                                    Username = e.Names,
                                                    BookingId = d.BookingId,
+                                                   UserId = d.UsersId,
                                                    RoomName = d.Name,
                                                    Title = d.Title,
                                                    Status = d.Status,
