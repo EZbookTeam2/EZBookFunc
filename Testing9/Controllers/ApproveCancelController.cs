@@ -18,7 +18,7 @@ namespace Testing9.Controllers
             try
             {
                 var data = from b in dbContext.Cancellation
-                           where b.BookingId == value.BookingId
+                           where b.BookingId == value.BookingId && b.Status.Equals("New")
                            select b;
                 Cancellation old = data.SingleOrDefault();
                 old.Status = value.Status;
