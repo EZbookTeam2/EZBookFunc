@@ -10,7 +10,7 @@ namespace Testing9.Controllers
 {
     public class Data
     {
-        public string CancelId { get; set; }
+        public int CancelId { get; set; }
         public string BookingId { get; set; }
         public string RoomName { get; set; }
         public string Title { get; set; }
