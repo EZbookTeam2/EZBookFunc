@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Web.Http;
 using Testing9.Models;
@@ -25,7 +26,7 @@ namespace Testing9.Controllers
 
             var Id = int.Parse(dbContext.Cancellation.Max(z => z.CancellationId)) + 1;
 
-            if (!dbContext.Cancellation.Any(cancel => cancel.BookingId.Equals(value.BookingId)))
+            if (!dbContext.Cancellation.Any(cancel => cancel.BookingId.Equals(value.BookingId) && cancel.Status.Equals("New")))
             {
                 Cancellation cancellation = new Cancellation();
                 cancellation.CancellationId = Id.ToString();
@@ -51,12 +52,13 @@ namespace Testing9.Controllers
             }
             else
             {
-                string message = "You have made a cancellation for this Booking already, please wait for the approval";
-                var example = new messageclass { Message = message };
-                return Ok(example);
+                    string message = "You have made a cancellation for this Booking already, please wait for the approval";
+                    var example = new messageclass { Message = message };
+                    return Ok(example); }
+
 
             }
 
         }
     }
-}
+
