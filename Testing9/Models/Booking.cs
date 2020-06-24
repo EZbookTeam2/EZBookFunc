@@ -5,6 +5,11 @@ namespace Testing9.Models
 {
     public partial class Booking
     {
+        public Booking()
+        {
+            Cancellation = new HashSet<Cancellation>();
+        }
+
         public string BookingId { get; set; }
         public string UsersId { get; set; }
         public string RoomId { get; set; }
@@ -19,5 +24,6 @@ namespace Testing9.Models
 
         public virtual Room Room { get; set; }
         public virtual Users Users { get; set; }
+        public virtual ICollection<Cancellation> Cancellation { get; set; }
     }
 }

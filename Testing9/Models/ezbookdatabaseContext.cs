@@ -47,7 +47,7 @@ namespace Testing9.Models
 
                 entity.Property(e => e.EndTime)
                     .HasColumnName("endTime")
-                    .HasMaxLength(1)
+                    .HasMaxLength(255)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Location)
@@ -67,7 +67,7 @@ namespace Testing9.Models
 
                 entity.Property(e => e.StartTime)
                     .HasColumnName("startTime")
-                    .HasMaxLength(1)
+                    .HasMaxLength(255)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Status)
@@ -103,10 +103,11 @@ namespace Testing9.Models
 
             modelBuilder.Entity<Cancellation>(entity =>
             {
+                entity.ToTable("cancellation");
+
                 entity.Property(e => e.CancellationId)
                     .HasColumnName("cancellation_id")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.BookingId)
                     .HasColumnName("booking_id")
@@ -115,12 +116,18 @@ namespace Testing9.Models
 
                 entity.Property(e => e.Reason)
                     .HasColumnName("reason")
-                    .HasMaxLength(4000);
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Status)
                     .HasColumnName("status")
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.Booking)
+                    .WithMany(p => p.Cancellation)
+                    .HasForeignKey(d => d.BookingId)
+                    .HasConstraintName("FK__cancellat__booki__5EBF139D");
             });
 
             modelBuilder.Entity<Room>(entity =>
