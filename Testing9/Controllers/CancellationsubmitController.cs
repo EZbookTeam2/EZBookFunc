@@ -24,12 +24,12 @@ namespace Testing9.Controllers
         public IHttpActionResult Post(Cancellation value)
         {
 
-            var Id = int.Parse(dbContext.Cancellation.Max(z => z.CancellationId)) + 1;
+            var Id = (dbContext.Cancellation.Max(z => z.CancellationId)) + 1;
 
             if (!dbContext.Cancellation.Any(cancel => cancel.BookingId.Equals(value.BookingId) && cancel.Status.Equals("New")))
             {
                 Cancellation cancellation = new Cancellation();
-                cancellation.CancellationId = Id.ToString();
+                cancellation.CancellationId = Id;
                 cancellation.BookingId = value.BookingId;
                 cancellation.Reason = value.Reason;
                 cancellation.Status = "New";
