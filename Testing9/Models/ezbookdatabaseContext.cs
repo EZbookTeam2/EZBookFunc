@@ -27,7 +27,7 @@ namespace Testing9.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=tcp:ezbookagtiv.database.windows.net,1433;Initial Catalog=ezbookdatabase;Persist Security Info=False;User ID=kelvin;Password=Abc123456;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                optionsBuilder.UseSqlServer("Data Source=(LocalDb)\\localdbezbook;Initial Catalog=ezbookdatabase;Integrated Security=True");
             }
         }
 
@@ -93,12 +93,12 @@ namespace Testing9.Models
                 entity.HasOne(d => d.Room)
                     .WithMany(p => p.Booking)
                     .HasForeignKey(d => d.RoomId)
-                    .HasConstraintName("FK__Booking__room_id__5441852A");
+                    .HasConstraintName("FK__Booking__room_id__2E1BDC42");
 
                 entity.HasOne(d => d.Users)
                     .WithMany(p => p.Booking)
                     .HasForeignKey(d => d.UsersId)
-                    .HasConstraintName("FK__Booking__users_i__534D60F1");
+                    .HasConstraintName("FK__Booking__users_i__2D27B809");
             });
 
             modelBuilder.Entity<Cancellation>(entity =>
@@ -127,7 +127,7 @@ namespace Testing9.Models
                 entity.HasOne(d => d.Booking)
                     .WithMany(p => p.Cancellation)
                     .HasForeignKey(d => d.BookingId)
-                    .HasConstraintName("FK__cancellat__booki__5EBF139D");
+                    .HasConstraintName("FK__cancellat__booki__2F10007B");
             });
 
             modelBuilder.Entity<Room>(entity =>
@@ -187,13 +187,13 @@ namespace Testing9.Models
                 entity.HasOne(d => d.Room)
                     .WithMany(p => p.Slot)
                     .HasForeignKey(d => d.RoomId)
-                    .HasConstraintName("FK__Slot__room_id__5535A963");
+                    .HasConstraintName("FK__Slot__room_id__300424B4");
             });
 
             modelBuilder.Entity<Testing>(entity =>
             {
                 entity.HasKey(e => e.Username)
-                    .HasName("PK__Testing__536C85E577232364");
+                    .HasName("PK__Testing__536C85E5D3B5718A");
 
                 entity.Property(e => e.Username).HasMaxLength(255);
 
