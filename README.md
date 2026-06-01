@@ -36,6 +36,12 @@ Recommended practice:
 - Keep local development values in `Web.config`.
 - Override production email secrets with deployment transforms or server-level configuration.
 
+## Release Tracking
+
+- `CHANGELOG.md`: human-readable release history
+- `docs/RELEASE_CHECKLIST.md`: repeatable release flow
+- `docs/DEPENDENCY_BACKLOG.md`: dependency follow-up items that should be reviewed during release planning
+
 ## Current API Areas
 
 - `api/BookingApplication`
