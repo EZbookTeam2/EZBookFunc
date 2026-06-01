@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace Testing9.Models
+namespace EZBook.Api.Models
 {
     public partial class Booking
     {

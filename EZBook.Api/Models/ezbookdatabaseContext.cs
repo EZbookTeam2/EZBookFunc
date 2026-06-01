@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore;
-using Testing9.Infrastructure;
+using EZBook.Api.Infrastructure;
 
-namespace Testing9.Models
+namespace EZBook.Api.Models
 {
     public partial class ezbookdatabaseContext : DbContext
     {

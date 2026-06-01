@@ -1,6 +1,6 @@
 using System.Configuration;
 
-namespace Testing9.Infrastructure
+namespace EZBook.Api.Infrastructure
 {
     public static class AppConfiguration
     {

@@ -1,7 +1,7 @@
-﻿using System.Web;
+using System.Web;
 using System.Web.Mvc;
 
-namespace Testing9
+namespace EZBook.Api
 {
     public class FilterConfig
     {

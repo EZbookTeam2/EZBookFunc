@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Testing9.Models
+namespace EZBook.Api.Models
 {
     public class ApiMessage
     {

@@ -1,6 +1,6 @@
-using Testing9.Models;
+using EZBook.Api.Models;
 
-namespace Testing9.Infrastructure
+namespace EZBook.Api.Infrastructure
 {
     public static class BookingFactory
     {

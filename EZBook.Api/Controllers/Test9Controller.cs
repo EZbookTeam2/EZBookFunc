@@ -2,10 +2,10 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Web.Http;
-using Testing9.Models;
-using Testing9.Utils;
+using EZBook.Api.Models;
+using EZBook.Api.Utils;
 
-namespace Testing9.Controllers
+namespace EZBook.Api.Controllers
 {
     [RoutePrefix("api/test9")]
     public class Test9Controller : ApiController

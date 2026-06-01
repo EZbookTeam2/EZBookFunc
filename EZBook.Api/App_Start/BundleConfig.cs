@@ -1,7 +1,7 @@
-﻿using System.Web;
+using System.Web;
 using System.Web.Optimization;
 
-namespace Testing9
+namespace EZBook.Api
 {
     public class BundleConfig
     {

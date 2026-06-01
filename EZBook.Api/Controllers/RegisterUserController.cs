@@ -1,9 +1,9 @@
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using Testing9.Models;
+using EZBook.Api.Models;
 
-namespace Testing9.Controllers
+namespace EZBook.Api.Controllers
 {
     [RoutePrefix("api/RegisterUser")]
     public class RegisterUserController : ApiController

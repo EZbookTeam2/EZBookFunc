@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Security.Cryptography;
 
-namespace Testing9.Utils
+namespace EZBook.Api.Utils
 {
     public class Common
     {
