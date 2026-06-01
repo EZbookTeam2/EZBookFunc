@@ -10,7 +10,7 @@ $ErrorActionPreference = "Stop"
 
 $scriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $repoRoot = Split-Path -Parent $scriptRoot
-$solutionPath = Join-Path $repoRoot "Testing9.sln"
+$solutionPath = Join-Path $repoRoot "EZBook.Api.sln"
 
 if (-not (Test-Path $solutionPath))
 {

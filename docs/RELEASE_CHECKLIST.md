@@ -15,7 +15,7 @@ Use this checklist before cutting a release from `master`.
 
 ## 3. Confirm configuration safety
 
-- Check that `Testing9/Web.config` does not contain production secrets committed to source control.
+- Check that `EZBook.Api/Web.config` does not contain production secrets committed to source control.
 - Confirm SMTP values are environment-appropriate for the target deployment.
 - Confirm the database connection string matches the intended environment.
 

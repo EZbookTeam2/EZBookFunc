@@ -13,7 +13,7 @@ $repoRoot = Split-Path -Parent $scriptRoot
 $requiredPaths = @(
     (Join-Path $repoRoot "CHANGELOG.md"),
     (Join-Path $repoRoot "docs\RELEASE_CHECKLIST.md"),
-    (Join-Path $repoRoot "Testing9\Web.config")
+    (Join-Path $repoRoot "EZBook.Api\Web.config")
 )
 
 foreach ($requiredPath in $requiredPaths)
@@ -36,7 +36,7 @@ $blockedPatterns = @(
 )
 
 $scanRoots = @(
-    (Join-Path $repoRoot "Testing9"),
+    (Join-Path $repoRoot "EZBook.Api"),
     (Join-Path $repoRoot "docs"),
     (Join-Path $repoRoot "README.md"),
     (Join-Path $repoRoot "CHANGELOG.md")
