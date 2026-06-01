@@ -42,6 +42,8 @@ Recommended practice:
 - `CHANGELOG.md`: human-readable release history
 - `docs/RELEASE_CHECKLIST.md`: repeatable release flow
 - `docs/DEPENDENCY_BACKLOG.md`: dependency follow-up items that should be reviewed during release planning
+- `.github/workflows/build.yml`: CI build and release check on push and pull request
+- `.github/dependabot.yml`: weekly dependency maintenance automation
 
 ## Current API Areas
 

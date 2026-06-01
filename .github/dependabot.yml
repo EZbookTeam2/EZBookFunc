@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/Testing9"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    target-branch: "master"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+    labels:
+      - "dependencies"
+      - "maintenance"
