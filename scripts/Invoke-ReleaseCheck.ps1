@@ -30,9 +30,19 @@ if ($changelogContent -notmatch "## \[Unreleased\]")
     throw "CHANGELOG.md must contain an Unreleased section."
 }
 
-$blockedPatterns = @(
-    "<redacted-secret>",
-    "<redacted-email>"
+$blockedChecks = @(
+    [pscustomobject]@{
+        Description = "Hardcoded SMTP credentials"
+        Pattern = 'NetworkCredential\s*\(\s*"[^"]+"\s*,\s*"[^"]+"'
+    },
+    [pscustomobject]@{
+        Description = "Inline SQL credentials in code"
+        Pattern = 'UseSqlServer\s*\(\s*"[^"]*(?:User ID|Uid)\s*=[^";]+;[^"]*(?:Password|Pwd)\s*=[^";]+;'
+    },
+    [pscustomobject]@{
+        Description = "Committed SMTP configuration value"
+        Pattern = '<add\s+key="Smtp\.(?:Username|Password|FromAddress)"\s+value="[^"]*\S[^"]*"'
+    }
 )
 
 $scanRoots = @(
@@ -44,24 +54,40 @@ $scanRoots = @(
 
 $violations = foreach ($scanRoot in $scanRoots)
 {
-    if (Test-Path $scanRoot)
+    if (-not (Test-Path $scanRoot))
     {
-        if ((Get-Item $scanRoot) -is [System.IO.DirectoryInfo])
+        continue
+    }
+
+    $files = if ((Get-Item $scanRoot) -is [System.IO.DirectoryInfo])
+    {
+        Get-ChildItem $scanRoot -Recurse -File
+    }
+    else
+    {
+        Get-Item $scanRoot
+    }
+
+    foreach ($blockedCheck in $blockedChecks)
+    {
+        foreach ($match in ($files | Select-String -Pattern $blockedCheck.Pattern -ErrorAction SilentlyContinue))
         {
-            Get-ChildItem $scanRoot -Recurse -File |
-                Select-String -Pattern $blockedPatterns -SimpleMatch -ErrorAction SilentlyContinue
-        }
-        else
-        {
-            Select-String -Path $scanRoot -Pattern $blockedPatterns -SimpleMatch -ErrorAction SilentlyContinue
+            [pscustomobject]@{
+                Path = $match.Path
+                LineNumber = $match.LineNumber
+                Rule = $blockedCheck.Description
+            }
         }
     }
 }
 
 if ($violations)
 {
-    $paths = $violations | Select-Object -ExpandProperty Path -Unique
-    throw "Blocked credential pattern found in: $($paths -join ', ')"
+    $details = $violations |
+        Sort-Object Path, LineNumber, Rule |
+        ForEach-Object { "$($_.Path):$($_.LineNumber) [$($_.Rule)]" }
+
+    throw "Blocked credential pattern found:`n$($details -join [Environment]::NewLine)"
 }
 
 & (Join-Path $scriptRoot "Invoke-Build.ps1") -Configuration $Configuration -Restore
