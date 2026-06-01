@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Web.Http;
 using Testing9.Models;
@@ -13,8 +10,6 @@ namespace Testing9.Controllers
     [RoutePrefix("api/test9")]
     public class Test9Controller : ApiController
     {
-        ezbookdatabaseContext dbContext = new ezbookdatabaseContext();
-
         [HttpGet]
         public IHttpActionResult Get()
         {
@@ -24,34 +19,33 @@ namespace Testing9.Controllers
         [HttpPost]
         public IHttpActionResult Post(Testing value)
         {
-            if (!dbContext.Testing.Any(User => User.Username.Equals(value.Username)))
+            if (value == null || string.IsNullOrWhiteSpace(value.Username) || string.IsNullOrWhiteSpace(value.Password))
             {
-                Testing user = new Testing();
-                user.Username = value.Username;
-                user.Salt = Convert.ToBase64String(Common.GetRandomSalt(16));
-                user.Password = Convert.ToBase64String(Common.SaltHashPassword(
-                   Encoding.ASCII.GetBytes(value.Password),
-                   Convert.FromBase64String(user.Salt)));
-                try
-                {
-                    dbContext.Add(user);
-                    dbContext.SaveChanges();
-                    string message = "Registered liao";
-                    return Ok(message);
-                }
-                catch (Exception ex)
-                {
-                    string message = "Register failed " + ex.Message;
-                    return Ok(message);
-
-                }
-            }
-            else
-            {
-                string message = "Username has been used";
-                return Ok(message);
+                return BadRequest("Username and password are required.");
             }
 
+            using (ezbookdatabaseContext dbContext = new ezbookdatabaseContext())
+            {
+                if (dbContext.Testing.Any(existingUser => existingUser.Username == value.Username))
+                {
+                    return Ok("Username has been used");
+                }
+
+                var testingUser = new Testing
+                {
+                    Username = value.Username,
+                    Salt = Convert.ToBase64String(Common.GetRandomSalt(16)),
+                };
+
+                testingUser.Password = Convert.ToBase64String(Common.SaltHashPassword(
+                    Encoding.ASCII.GetBytes(value.Password),
+                    Convert.FromBase64String(testingUser.Salt)));
+
+                dbContext.Add(testingUser);
+                dbContext.SaveChanges();
+            }
+
+            return Ok("Registered liao");
         }
     }
 }

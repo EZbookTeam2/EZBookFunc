@@ -1,64 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Web.Http;
+using Testing9.Infrastructure;
 using Testing9.Models;
-using Testing9.Utils;
 
 namespace Testing9.Controllers
 {
     [RoutePrefix("api/Cancellationsubmit")]
-    public class messageclass
-    {
-        public string Message { get; set; }
-    }
     public class CancellationsubmitController : ApiController
     {
-        ezbookdatabaseContext dbContext = new ezbookdatabaseContext();
-
         [HttpPost]
         public IHttpActionResult Post(Cancellation value)
         {
-
-            var Id = (dbContext.Cancellation.Max(z => z.CancellationId)) + 1;
-
-            if (!dbContext.Cancellation.Any(cancel => cancel.BookingId.Equals(value.BookingId) && cancel.Status.Equals("New")))
+            if (value == null || string.IsNullOrWhiteSpace(value.BookingId))
             {
-                Cancellation cancellation = new Cancellation();
-                cancellation.CancellationId = Id;
-                cancellation.BookingId = value.BookingId;
-                cancellation.Reason = value.Reason;
-                cancellation.Status = "New";
-                try
-                {
-                    dbContext.Add(cancellation);
-                    dbContext.SaveChanges();
-                    string message = "Submit Successfully";
-                    var example = new messageclass { Message = message };
-                    return Ok(example);
-                }
-                catch (Exception ex)
-                {
-                    string message = "Submit Failed" + ex.Message;
-                    var example = new messageclass { Message = message };
-                    return Ok(example);
-
-
-                }
-            }
-            else
-            {
-                    string message = "You have made a cancellation for this Booking already, please wait for the approval";
-                    var example = new messageclass { Message = message };
-                    return Ok(example); }
-
-
+                return BadRequest("Booking id is required.");
             }
 
+            using (ezbookdatabaseContext dbContext = new ezbookdatabaseContext())
+            {
+                var existingCancellation = dbContext.Cancellation.Any(cancel =>
+                    cancel.BookingId == value.BookingId && cancel.Status == CancellationStatusValues.PendingApproval);
+
+                if (existingCancellation)
+                {
+                    return Content(HttpStatusCode.Conflict, new ApiMessage
+                    {
+                        Message = "You have made a cancellation for this booking already, please wait for the approval"
+                    });
+                }
+
+                var nextId = dbContext.Cancellation
+                    .Select(cancellation => cancellation.CancellationId)
+                    .DefaultIfEmpty(0)
+                    .Max() + 1;
+
+                var cancellationToCreate = new Cancellation
+                {
+                    CancellationId = nextId,
+                    BookingId = value.BookingId,
+                    Reason = value.Reason,
+                    Status = CancellationStatusValues.PendingApproval
+                };
+
+                dbContext.Add(cancellationToCreate);
+                dbContext.SaveChanges();
+
+                return Ok(new ApiMessage { Message = "Submit Successfully" });
+            }
         }
     }
-
+}

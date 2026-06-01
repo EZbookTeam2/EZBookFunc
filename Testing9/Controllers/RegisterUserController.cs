@@ -1,62 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Testing9.Models;
 
 namespace Testing9.Controllers
 {
     [RoutePrefix("api/RegisterUser")]
-    public class messageclass2
-    {
-        public string Message { get; set; }
-    }
     public class RegisterUserController : ApiController
     {
-        ezbookdatabaseContext dbContext = new ezbookdatabaseContext();
-
         [HttpPost]
         public IHttpActionResult Post(Users value)
         {
-
-            var Id = int.Parse(dbContext.Users.Max(z => z.UsersId)) + 1;
-            if (!dbContext.Users.Any(x => x.Email.Equals(value.Email)))
+            if (value == null || string.IsNullOrWhiteSpace(value.Email))
             {
-                Users Nuser = new Users();
-                Nuser.UsersId = Id.ToString();
-                Nuser.Names = value.Names;
-                Nuser.Passwords = value.Passwords;
-                Nuser.Email = value.Email;
-                Nuser.Department = value.Department;
-                Nuser.StartDate = value.StartDate;
-                Nuser.Nationality = value.Nationality;
-                Nuser.Position = value.Position;
-                Nuser.Profilepic = value.Profilepic;
-                try
-                {
-                    dbContext.Add(Nuser);
-                    dbContext.SaveChanges();
-                    string message = "Registered";
-                    var example = new messageclass { Message = message };
-                    return Ok(example);
-                }
-                catch (Exception ex)
-                {
-                    string message = "Submit Failed" + ex.Message;
-                    var example = new messageclass { Message = message };
-                    return Ok(example);
-
-
-                }
+                return BadRequest("Email is required.");
             }
-            else
-            {
-                string message = "The Email has been used";
-                var example = new messageclass { Message = message };
-                return Ok(example);
 
+            using (ezbookdatabaseContext dbContext = new ezbookdatabaseContext())
+            {
+                if (dbContext.Users.Any(user => user.Email == value.Email))
+                {
+                    return Content(HttpStatusCode.Conflict, new ApiMessage { Message = "The Email has been used" });
+                }
+
+                var nextId = dbContext.Users
+                    .AsEnumerable()
+                    .Select(user =>
+                    {
+                        int parsedId;
+                        return int.TryParse(user.UsersId, out parsedId) ? parsedId : 0;
+                    })
+                    .DefaultIfEmpty(0)
+                    .Max() + 1;
+
+                var userToCreate = new Users
+                {
+                    UsersId = nextId.ToString(),
+                    Names = value.Names,
+                    Passwords = value.Passwords,
+                    Email = value.Email,
+                    Department = value.Department,
+                    StartDate = value.StartDate,
+                    Nationality = value.Nationality,
+                    Position = value.Position,
+                    Profilepic = value.Profilepic,
+                    Code = value.Code
+                };
+
+                dbContext.Add(userToCreate);
+                dbContext.SaveChanges();
+
+                return Ok(new ApiMessage { Message = "Registered" });
             }
         }
     }

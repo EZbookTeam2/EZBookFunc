@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using Testing9.Models;
 using System.Net.Mail;
+using System.Web.Http;
+using Testing9.Infrastructure;
+using Testing9.Models;
 
 namespace Testing9.Controllers
 {
@@ -13,26 +10,43 @@ namespace Testing9.Controllers
     public class EmailController : ApiController
     {
         [HttpPost]
-        public IHttpActionResult sendmail(EmailClass ec)
+        public IHttpActionResult SendMail(EmailClass email)
         {
-            string subject = ec.subject;
-            string body = ec.body;
-            string to = ec.to;
-            MailMessage mm = new MailMessage();
-            mm.From = new MailAddress("animeplaylist78@gmail.com");
-            mm.To.Add(to);
-            mm.Subject = subject;
-            mm.Body = body;
-            mm.IsBodyHtml = false;
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
-            smtp.EnableSsl = true;
-            smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new NetworkCredential("animeplaylist78@gmail.com", "Abc123456_");
-            smtp.Host = "smtp.gmail.com";
-            smtp.Port = 587;
-            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtp.Send(mm);
-            return Ok();
+            if (email == null
+                || string.IsNullOrWhiteSpace(email.to)
+                || string.IsNullOrWhiteSpace(email.subject)
+                || string.IsNullOrWhiteSpace(email.body))
+            {
+                return BadRequest("To, subject, and body are required.");
+            }
+
+            var smtpSettings = AppConfiguration.GetSmtpSettings();
+            if (!smtpSettings.IsConfigured)
+            {
+                return Content(HttpStatusCode.InternalServerError, new ApiMessage
+                {
+                    Message = "SMTP settings are not configured. Update the Smtp.* values in Web.config."
+                });
+            }
+
+            using (var message = new MailMessage())
+            using (var smtpClient = new SmtpClient(smtpSettings.Host))
+            {
+                message.From = new MailAddress(smtpSettings.FromAddress);
+                message.To.Add(email.to);
+                message.Subject = email.subject;
+                message.Body = email.body;
+                message.IsBodyHtml = false;
+
+                smtpClient.EnableSsl = smtpSettings.EnableSsl;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new NetworkCredential(smtpSettings.Username, smtpSettings.Password);
+                smtpClient.Port = smtpSettings.Port;
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.Send(message);
+            }
+
+            return Ok(new ApiMessage { Message = "Email sent." });
         }
     }
 }

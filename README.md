@@ -1,0 +1,62 @@
+# EZBookFunc
+
+Legacy ASP.NET Web API project for room booking, booking approval, cancellation approval, room management, and user management.
+
+## Stack
+
+- .NET Framework 4.7.2
+- ASP.NET Web API 2
+- Entity Framework Core 3.1
+- SQL Server / LocalDB
+
+## Project Layout
+
+- `Testing9/Controllers`: API endpoints
+- `Testing9/Models`: EF entities, DbContext, and API DTOs
+- `Testing9/Infrastructure`: shared configuration and status helpers
+- `Testing9/App_Start`: Web API startup and route registration
+- `Testing9/Utils`: password hashing utilities
+
+## Local Setup
+
+1. Restore NuGet packages for `Testing9.sln`.
+2. Confirm the `ezbookdatabase` connection string in `Testing9/Web.config`.
+3. If email sending is required, fill the `Smtp.*` app settings with environment-specific values.
+4. Build the solution with Visual Studio or the Visual Studio MSBuild host (`MSBuild.exe` from the Visual Studio installation).
+
+## Configuration
+
+The project now reads runtime settings from `Web.config` instead of hardcoding them in controllers:
+
+- `connectionStrings/ezbookdatabase`
+- `appSettings` entries under `Smtp.*`
+
+Recommended practice:
+
+- Keep local development values in `Web.config`.
+- Override production email secrets with deployment transforms or server-level configuration.
+
+## Current API Areas
+
+- `api/BookingApplication`
+- `api/BookingList`
+- `api/BookingListAdmin`
+- `api/BookingID`
+- `api/ApproveBooking`
+- `api/CancelBooking`
+- `api/Cancellationsubmit`
+- `api/CancellationList`
+- `api/ApproveCancel`
+- `api/User`
+- `api/RegisterUser`
+- `api/DeleteUser`
+- `api/createRoom`
+- `api/Schedule`
+- `api/Email`
+
+## Maintenance Notes
+
+- Booking and cancellation status strings are centralized in `Testing9/Infrastructure/StatusValues.cs`.
+- Shared API response/projection DTOs live in `Testing9/Models/ApiModels.cs`.
+- `ezbookdatabaseContext` now prefers the named connection string from `Web.config`.
+- SMTP credentials are no longer embedded in `EmailController`.
