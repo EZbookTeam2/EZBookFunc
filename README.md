@@ -23,6 +23,7 @@ Legacy ASP.NET Web API project for room booking, booking approval, cancellation 
 2. Confirm the `ezbookdatabase` connection string in `Testing9/Web.config`.
 3. If email sending is required, fill the `Smtp.*` app settings with environment-specific values.
 4. Build the solution with Visual Studio or the Visual Studio MSBuild host (`MSBuild.exe` from the Visual Studio installation).
+5. For repeatable local checks, use `.\scripts\Invoke-Build.ps1 -Restore` and `.\scripts\Invoke-ReleaseCheck.ps1`.
 
 ## Configuration
 
