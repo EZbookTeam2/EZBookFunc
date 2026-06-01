@@ -252,6 +252,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\AppConfiguration.cs" />
+    <Compile Include="Infrastructure\BookingFactory.cs" />
+    <Compile Include="Infrastructure\StatusValues.cs" />
+    <Compile Include="Models\ApiModels.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\Cancellation.cs" />
     <Compile Include="Models\EmailClass.cs" />
@@ -289,6 +293,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
+    <Folder Include="Infrastructure\" />
     <Folder Include="Views\Gmailsend\" />
   </ItemGroup>
   <PropertyGroup>

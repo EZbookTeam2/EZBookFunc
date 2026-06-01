@@ -1,54 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
+using Testing9.Infrastructure;
 using Testing9.Models;
+
 namespace Testing9.Controllers
 {
     [RoutePrefix("api/ApproveCancel")]
-
     public class ApproveCancelController : ApiController
     {
-        ezbookdatabaseContext dbContext = new ezbookdatabaseContext();
         [HttpPut]
         public IHttpActionResult Put(Cancellation value)
         {
-            try
+            if (value == null || string.IsNullOrWhiteSpace(value.BookingId) || string.IsNullOrWhiteSpace(value.Status))
             {
-                var data = from b in dbContext.Cancellation
-                           where b.BookingId == value.BookingId && b.Status.Equals("New")
-                           select b;
-                Cancellation old = data.SingleOrDefault();
-                old.Status = value.Status;
+                return BadRequest("Booking id and status are required.");
+            }
+
+            using (ezbookdatabaseContext dbContext = new ezbookdatabaseContext())
+            {
+                var cancellation = dbContext.Cancellation
+                    .SingleOrDefault(item => item.BookingId == value.BookingId && item.Status == CancellationStatusValues.PendingApproval);
+
+                if (cancellation == null)
+                {
+                    return NotFound();
+                }
+
+                cancellation.Status = value.Status;
+
+                if (value.Status == CancellationStatusValues.Approved)
+                {
+                    var booking = dbContext.Booking.SingleOrDefault(item => item.BookingId == value.BookingId);
+                    if (booking == null)
+                    {
+                        return NotFound();
+                    }
+
+                    booking.Status = BookingStatusValues.Cancelled;
+                }
+
                 dbContext.SaveChanges();
-                try
-                {   if(value.Status == "Approved") {
-                        var data2 = from b2 in dbContext.Booking
-                                   where b2.BookingId == value.BookingId
-                                   select b2;
-                        Booking old2 = data2.SingleOrDefault();
-                        old2.Status = "Cancelled";
-                        dbContext.SaveChanges();
-                        return Ok("Approved");}
-                    else { 
-
-                        return Ok("Dispproved"); }
-
-                    
-
-                }
-                catch (Exception ex2) {
-                    return Ok("fail2" + ex2.Message);
-                }
             }
-            catch (Exception ex)
-            {
-                string message = "fail " + ex.Message;
-                return Ok(message);
 
-            }
+            return Ok(value.Status == CancellationStatusValues.Approved
+                ? CancellationStatusValues.Approved
+                : CancellationStatusValues.Disapproved);
         }
     }
 }
