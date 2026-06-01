@@ -10,9 +10,10 @@ This project follows a simple release log:
 
 ## [Unreleased]
 
-### Added
+### Changed
 
-- Placeholder for the next release notes.
+- Renamed the legacy `Testing9` solution, project, folder, assembly, and namespace identity to `EZBook.Api`.
+- Updated local build scripts, release checks, and repository documentation to follow the new `EZBook.Api` naming consistently.
 
 ## [2026-06-01]
 
